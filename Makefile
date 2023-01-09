@@ -4,7 +4,7 @@ TARGET ?= example_provider.so
 # Some helper constants
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
-Q :=
+Q := @
 CXX := clang++
 ECHO := $(Q)echo
 ECXX := $(ECHO) "    CXX "
@@ -20,8 +20,8 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CXXFLAGS += -std=c++20
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -g -std=c++20 -fPIC -rdynamic -shared -Wall
-#LDFLAGS ?= -ldl -lbinn -pthread
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -g -std=c++20 -fPIC -Wall
+LDFLAGS ?= -rdynamic -shared -ldl -lbinn -pthread
 
 MKDIR_P ?= mkdir -p
 

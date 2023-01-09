@@ -6,7 +6,7 @@ using namespace swarmc::Type;
 using namespace swarmc::ISA;
 
 namespace egp {
-
+    /** A function call which returns a hello-world string. */
     class HelloWorldFunctionCall : public IProviderFunctionCall {
     public:
         HelloWorldFunctionCall(IProvider* provider) :
@@ -28,6 +28,8 @@ namespace egp {
         IProvider* _provider;
     };
 
+
+    /** A function which returns a hello-world string. */
     class HelloWorldFunction : public IProviderFunction {
     public:
         HelloWorldFunction(IProvider* provider) : IProviderFunction("HELLO_WORLD"), _provider(provider) {}
@@ -63,6 +65,8 @@ namespace egp {
         IProvider* _provider;
     };
 
+
+    /** An example of an external runtime provider. */
     class ExampleProvider : public IProvider {
     public:
         ExampleProvider(IGlobalServices* global) : _global(global) {}
@@ -88,15 +92,21 @@ namespace egp {
         IGlobalServices* _global;
     };
 
+
+    /** The entrypoint into the external provider. */
     class ExampleProviderModule : public ProviderModule {
     public:
         [[nodiscard]] IProvider* build(IGlobalServices* global) override {
             return new ExampleProvider(global);
         }
     };
-
 }
 
+
+/**
+ * An example of a provider module factory.
+ * This is called by the SVM to load this external provider.
+ */
 extern "C" egp::ExampleProviderModule* factory() {
     return new egp::ExampleProviderModule;
 }
